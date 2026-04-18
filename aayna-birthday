@@ -1,0 +1,187 @@
+aayna
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aayna🌷</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: black;
+  color: white;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Stars */
+.star {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: white;
+  opacity: 0.8;
+  animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+/* Card */
+.card {
+  margin-top: 100px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+}
+
+/* Input */
+input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+/* Button */
+button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background: #7ee787;
+}
+
+/* Image */
+img {
+  width: 260px;
+  height: 260px;
+  border-radius: 20px;
+  margin-top: 20px;
+  object-fit: cover;
+  animation: fade 3s ease;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: scale(1.1); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Fireworks */
+.firework {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background: yellow;
+  border-radius: 50%;
+  animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+  to {
+    transform: scale(10);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOCK -->
+<div id="lock">
+  <div class="card">
+    <h2>🌷 Aayna🌷’s Surprise 🌷</h2>
+    <input id="pass" type="password" placeholder="Enter Password">
+    <br><br>
+    <button onclick="unlock()">Unlock 🔓</button>
+    <p id="err"></p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main" style="display:none;">
+  <h1>🌷 Happy Birthday Aayna🌷 🌸</h1>
+  <p>Welcome to your special surprise ✨</p>
+
+  <img id="img">
+
+  <br>
+  <button onclick="playMusic()">Play Music 🎵</button>
+</div>
+
+<audio id="music">
+  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Scott_Holmes_Music/Corporate__Motivational_Music/Scott_Holmes_Music_-_Happy_Music.mp3">
+</audio>
+
+<script>
+let images = [
+"https://i.supaimg.com/58868626-3668-41a2-b05c-e3b339049dc6/91238b02-2c37-4cac-a931-db98bbb3d856.jpg",
+"https://i.supaimg.com/58868626-3668-41a2-b05c-e3b339049dc6/bce34474-9364-4e08-8faa-440d32d74297.jpg",
+"https://i.supaimg.com/58868626-3668-41a2-b05c-e3b339049dc6/c4163189-1108-4ba7-95fc-284a39b74df0.jpg",
+"https://i.supaimg.com/58868626-3668-41a2-b05c-e3b339049dc6/e2ceca87-37c9-480b-9f61-03acc091878a.jpg",
+"https://i.supaimg.com/58868626-3668-41a2-b05c-e3b339049dc6/0db79d27-5231-4df4-92d8-c9f52fead23e.jpg"
+];
+
+let i = 0;
+
+function unlock(){
+  if(document.getElementById("pass").value==="2007"){
+    document.getElementById("lock").style.display="none";
+    document.getElementById("main").style.display="block";
+    start();
+    stars();
+    fireworks();
+  } else {
+    document.getElementById("err").innerText="Wrong password ❌";
+  }
+}
+
+/* Slideshow */
+function start(){
+  document.getElementById("img").src = images[0];
+  setInterval(()=>{
+    i=(i+1)%images.length;
+    let img=document.getElementById("img");
+    img.style.animation="none";
+    void img.offsetWidth;
+    img.style.animation="fade 3s ease";
+    img.src=images[i];
+  },3000);
+}
+
+/* Stars */
+function stars(){
+  for(let i=0;i<100;i++){
+    let s=document.createElement("div");
+    s.className="star";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    s.style.animationDuration=(1+Math.random()*2)+"s";
+    document.body.appendChild(s);
+  }
+}
+
+/* Fireworks */
+function fireworks(){
+  for(let i=0;i<20;i++){
+    setTimeout(()=>{
+      let f=document.createElement("div");
+      f.className="firework";
+      f.style.left=Math.random()*100+"vw";
+      f.style.top=Math.random()*100+"vh";
+      document.body.appendChild(f);
+      setTimeout(()=>f.remove(),1000);
+    },i*100);
+  }
+}
+
+/* Music */
+function playMusic(){
+  document.getElementById("music").play();
+}
+</script>
+
+</body>
+</html>
