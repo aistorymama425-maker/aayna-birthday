@@ -1,0 +1,235 @@
+04.19 9:39 AM
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aayna </title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:black;
+  color:white;
+  overflow:hidden;
+}
+
+/*  Stars */
+.stars{
+  position:fixed;
+  width:100%;
+  height:100%;
+  z-index:-1;
+}
+
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  opacity:0.6;
+  animation:twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle{
+  from{opacity:0.2;}
+  to{opacity:0.8;}
+}
+
+/* Pages Container */
+.container{
+  display:flex;
+  width:600%;
+  height:100vh;
+  transition:transform 0.6s ease-in-out;
+}
+
+/* Page */
+.page{
+  width:100vw;
+  height:100vh;
+  flex-shrink:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+
+/* Card */
+.card{
+  background:#161b22;
+  padding:25px;
+  border-radius:20px;
+}
+
+/* Image */
+img{
+  width:260px;
+  height:260px;
+  border-radius:20px;
+  object-fit:cover;
+  margin:15px 0;
+}
+
+/* Button */
+button{
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  background:#7ee787;
+  margin-top:15px;
+}
+
+/* Fireworks */
+.fire{
+  position:fixed;
+  font-size:14px;
+  animation:boom 0.8s ease-out forwards;
+}
+
+@keyframes boom{
+  from{transform:scale(0);opacity:0.8;}
+  to{transform:scale(2);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container" id="slider">
+
+<!--  PAGE 1 -->
+<div class="page">
+  <div class="card">
+    <h2> Aayna’s Surprise </h2>
+    <input id="pass" type="password" placeholder="Enter Password">
+    <br><br>
+    <button onclick="unlock()">Unlock </button>
+    <p id="err" style="color:red;"></p>
+  </div>
+</div>
+
+<!--  PAGE 2 -->
+<div class="page">
+  <div>
+    <h1>Happy Birthday </h1>
+    <p>This is something special for you </p>
+    <button onclick="next()">Next ➡</button>
+  </div>
+</div>
+
+<!--  PAGE 3 -->
+<div class="page">
+  <div>
+    <img src="https://i.supaimg.com/58868626-3668-41a2-b05c-e3b339049dc6/91238b02-2c37-4cac-a931-db98bbb3d856.jpg">
+    <p>Every moment with you feels special </p>
+    <button onclick="next()">Next ➡</button>
+  </div>
+</div>
+
+<!--  PAGE 4 -->
+<div class="page">
+  <div class="card">
+    <h2> A Small Letter</h2>
+    <p id="letter"></p>
+    <button onclick="next()">Next ➡</button>
+  </div>
+</div>
+
+<!--  PAGE 5 -->
+<div class="page">
+  <div>
+    <img src="https://i.supaimg.com/58868626-3668-41a2-b05c-e3b339049dc6/bce34474-9364-4e08-8faa-440d32d74297.jpg">
+    <p>You make everything better </p>
+    <button onclick="next()">Next ➡</button>
+  </div>
+</div>
+
+<!--  PAGE 6 -->
+<div class="page">
+  <div>
+    <h2>Final Surprise </h2>
+    <p>You are my favorite person </p>
+    <button onclick="playMusic()">Play Music </button>
+  </div>
+</div>
+
+</div>
+
+<audio id="music">
+<source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Scott_Holmes_Music/Corporate__Motivational_Music/Scott_Holmes_Music_-_Happy_Music.mp3">
+</audio>
+
+<script>
+let current=0;
+
+/* Slide */
+function next(){
+  current++;
+  document.getElementById("slider").style.transform="translateX(-"+(current*100)+"vw)";
+  if(current==3) typeLetter();
+}
+
+/* Unlock */
+function unlock(){
+  if(document.getElementById("pass").value==="2007"){
+    next();
+    stars();
+    fireworks();
+  } else {
+    document.getElementById("err").innerText="Wrong password ❌";
+  }
+}
+
+/* Stars */
+function stars(){
+  let c=document.getElementById("stars");
+  for(let i=0;i<30;i++){
+    let s=document.createElement("div");
+    s.className="star";
+    s.style.top=Math.random()*100+"vh";
+    s.style.left=Math.random()*100+"vw";
+    c.appendChild(s);
+  }
+}
+
+/* Fireworks */
+function fireworks(){
+  for(let i=0;i<8;i++){
+    setTimeout(()=>{
+      let f=document.createElement("div");
+      f.className="fire";
+      f.innerHTML="✨";
+      f.style.left=Math.random()*100+"vw";
+      f.style.top=Math.random()*100+"vh";
+      document.body.appendChild(f);
+      setTimeout(()=>f.remove(),800);
+    },i*150);
+  }
+}
+
+/* Typing */
+let text="You are very special  Stay happy always ✨";
+let i=0;
+
+function typeLetter(){
+  let box=document.getElementById("letter");
+  let int=setInterval(()=>{
+    box.innerHTML+=text[i];
+    i++;
+    if(i>=text.length) clearInterval(int);
+  },40);
+}
+
+/* Music */
+function playMusic(){
+  document.getElementById("music").play();
+}
+</script>
+
+</body>
+</html>
